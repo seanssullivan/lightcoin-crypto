@@ -1,4 +1,12 @@
-let balance = 500.00;
+class Account {
+
+  constructor(username) {
+    this.username = username;
+    this.balance = 0;
+  }
+
+}
+
 
 class Withdrawal {
 
@@ -12,7 +20,17 @@ class Withdrawal {
 
 }
 
+class Deposit {
 
+  constructor(amount) {
+    this.amount = amount;
+  }
+
+  commit() {
+    balance += this.amount;
+  }
+
+}
 
 
 // DRIVER CODE BELOW
@@ -25,5 +43,9 @@ console.log('Transaction 1:', t1);
 t2 = new Withdrawal(9.99);
 t2.commit();
 console.log('Transaction 2:', t2);
+
+t3 = new Deposite(120.00);
+t3.commit();
+console.log('Transaction 3:', t3);
 
 console.log('Balance:', balance);

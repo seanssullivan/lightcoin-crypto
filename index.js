@@ -6,7 +6,7 @@ class Account {
   }
 
   get balance() {
-    return this.transactions.reduce((sum, curr) => sum + curr.value);
+    return this.transactions.reduce((sum, curr) => sum + curr.value, 0);
   }
 
   addTransaction(transaction) {
@@ -22,9 +22,19 @@ class Transaction {
     this.account = account;
   }
 
+  isAllowed() {
+    return this.account.balance + this.value > 0 ? true : false;
+  }
+
   commit() {
-    this.time = new Date();
-    this.account.addTransaction(this);
+    if (this.isAllowed()) {
+      this.time = new Date();
+      this.account.addTransaction(this);
+      return true;
+
+    } else {
+      return false;
+    }
   }
 }
 
@@ -52,17 +62,20 @@ const myAccount = new Account("snow-patrol");
 
 t1 = new Withdrawal(50.25, myAccount);
 console.log('Transaction Amount:' + t1.value);
-t1.commit();
+const t1Commited = t1.commit();
+console.log("Transaction Successful:", t1Commited);
 console.log('Transaction 1:', t1);
 
 t2 = new Withdrawal(9.99, myAccount);
 console.log('Transaction Amount:' + t2.value);
-t2.commit();
+const t2Commited = t2.commit();
+console.log("Transaction Successful:", t2Commited);
 console.log('Transaction 2:', t2);
 
 t3 = new Deposit(120.00, myAccount);
 console.log('Transaction Amount:' + t3.value);
-t3.commit();
+const t3Commited = t3.commit();
+console.log("Transaction Successful:", t3Commited);
 console.log('Transaction 3:', t3);
 
 console.log('Balance:', myAccount.balance);
